@@ -5,13 +5,9 @@ lvim.plugins = {
     event = "InsertEnter",
     config = function()
       require("copilot").setup({
-        suggestion = {
-          auto_trigger = true,
-        }
       })
     end,
   },
-
 
   {
     'folke/trouble.nvim',
@@ -69,7 +65,6 @@ lvim.plugins = {
 
   {
     "ray-x/lsp_signature.nvim",
-    event = "BufRead",
     config = function() require "lsp_signature".on_attach() end,
   },
 
@@ -88,14 +83,11 @@ lvim.plugins = {
 
   {
     "folke/todo-comments.nvim",
-    event = "BufRead",
+    event = "VimEnter",
+    dependencies = { "nvim-lua/plenary.nvim" },
     config = function()
       require("todo-comments").setup()
     end,
-  },
-
-  {
-    "wakatime/vim-wakatime"
   },
 
   {
@@ -111,7 +103,19 @@ lvim.plugins = {
   {
     "mrjones2014/nvim-ts-rainbow",
   },
+  {
+    'laytan/tailwind-sorter.nvim',
+    dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-lua/plenary.nvim' },
+    build = 'cd formatter && npm i && npm run build',
+    config = {
+      on_save_enabled = true,
+      on_save_pattern = { '*.html', '*.js', '*.jsx', '*.tsx', '*.twig', '*.hbs', '*.php', '*.heex', '*.astro' }, -- The file patterns to watch and sort.  on_save_pattern = { '*.html', '*.js', '*.jsx', '*.tsx', '*.twig', '*.hbs', '*.php', '*.heex', '*.astro' }, -- The file patterns to watch and sort.
 
+    },
+  },
+  {
+    'ThePrimeagen/vim-be-good'
+  }
 }
 
 
