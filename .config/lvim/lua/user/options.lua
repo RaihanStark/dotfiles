@@ -1,5 +1,17 @@
+-- Editor options
+
+vim.opt.shell = "/bin/sh"
 lvim.format_on_save.enabled = true
 vim.opt.relativenumber = true
+lvim.builtin.telescope.theme = "ivy"
+
+-- Exlude user directories from project
+lvim.builtin.project.exclude_dirs = {
+  '/Users/raihan/'
+}
+
+-- Theming
+
 lvim.colorscheme = 'tokyonight-night'
 lvim.transparent_window = true
 lvim.builtin.treesitter.rainbow.enable = true
@@ -15,41 +27,54 @@ local colors = {
   replace = "#e46876",
   command = "#e6c384",
 }
+
 lvim.builtin.lualine.options.theme = {
   inactive = {
     a = { fg = colors.gray, bg = colors.outerbg, gui = "bold" },
     b = { fg = colors.gray, bg = colors.outerbg },
     c = { fg = colors.gray, bg = colors.innerbg },
+    x = { fg = colors.gray, bg = colors.innerbg },
+    y = { fg = colors.replace, bg = colors.outerbg, gui = "bold" },
+
   },
   visual = {
     a = { fg = colors.darkgray, bg = colors.visual, gui = "bold" },
     b = { fg = colors.gray, bg = colors.outerbg },
     c = { fg = colors.gray, bg = colors.innerbg },
+    x = { fg = colors.gray, bg = colors.innerbg },
+    y = { fg = colors.replace, bg = colors.outerbg, gui = "bold" },
   },
   replace = {
     a = { fg = colors.darkgray, bg = colors.replace, gui = "bold" },
     b = { fg = colors.gray, bg = colors.outerbg },
     c = { fg = colors.gray, bg = colors.innerbg },
+    x = { fg = colors.gray, bg = colors.innerbg },
+    y = { fg = colors.replace, bg = colors.outerbg, gui = "bold" },
   },
   normal = {
     a = { fg = colors.darkgray, bg = colors.normal, gui = "bold" },
     b = { fg = colors.gray, bg = colors.outerbg },
     c = { fg = colors.gray, bg = colors.innerbg },
+    x = { fg = colors.gray, bg = colors.innerbg },
+    y = { fg = colors.replace, bg = colors.outerbg, gui = "bold" },
   },
   insert = {
     a = { fg = colors.darkgray, bg = colors.insert, gui = "bold" },
     b = { fg = colors.gray, bg = colors.outerbg },
     c = { fg = colors.gray, bg = colors.innerbg },
+    x = { fg = colors.gray, bg = colors.innerbg },
+    y = { fg = colors.replace, bg = colors.outerbg, gui = "bold" },
   },
   command = {
     a = { fg = colors.darkgray, bg = colors.command, gui = "bold" },
     b = { fg = colors.gray, bg = colors.outerbg },
     c = { fg = colors.gray, bg = colors.innerbg },
+    x = { fg = colors.gray, bg = colors.innerbg },
+    y = { fg = colors.replace, bg = colors.outerbg, gui = "bold" },
   },
 }
 
-vim.opt.shell = "/bin/sh"
-
+-- linters
 
 local linters = require "lvim.lsp.null-ls.linters"
 linters.setup {
@@ -89,6 +114,10 @@ formatters.setup {
     filetypes = { "typescript", "typescriptreact", "javascript", "javascriptreact", "vue", "svelte" }
   },
 }
+
+
+-- Custom Dashboard
+
 local text = require "lvim.interface.text"
 local footer = {
   type = "text",
@@ -128,6 +157,22 @@ lvim.builtin.alpha.dashboard.section.footer = footer
 lvim.builtin.alpha.dashboard.section.buttons = buttons
 
 
+
 lvim.builtin.breadcrumbs.active = false
 vim.opt.showtabline = 0
 lvim.builtin.bufferline.active = false
+
+-- Custom Lualine
+
+local function get_modified_status()
+  local modified = vim.bo.modified
+  if modified then
+    return lvim.icons.ui.Close .. " Unsaved"
+  else
+    return ""
+  end
+end
+
+lvim.builtin.lualine.sections.lualine_y = {
+  get_modified_status
+}
