@@ -18,6 +18,15 @@ return {
         },
         opts = { skip = true },
       })
+
+      -- DANGER: this is surspressing inlay hints error messages
+      table.insert(opts.routes, {
+        filter = {
+          error = true,
+          find = "Invalid 'col': out of range",
+        },
+        opts = { skip = true },
+      })
       local focused = true
       vim.api.nvim_create_autocmd("FocusGained", {
         callback = function()
@@ -58,6 +67,7 @@ return {
       timeout = 5000,
       background_colour = "#000000",
       render = "wrapped-compact",
+      stages = "slide",
     },
   },
 
@@ -185,7 +195,7 @@ return {
           group_empty = true,
         },
         filters = {
-          dotfiles = true,
+          dotfiles = false,
           custom = {
             "node_modules/.*",
           },
