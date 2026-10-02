@@ -1,0 +1,105 @@
+/* ── palette (matches waybar) ──────────────────────────── */
+@define-color bg        rgba(24, 24, 32, 0.92);
+@define-color bg-hover  rgba(255, 255, 255, 0.07);
+@define-color bg-input  rgba(255, 255, 255, 0.05);
+@define-color fg        #cdd6f4;
+@define-color muted     #7f849c;
+@define-color accent    #89b4fa;
+@define-color border    rgba(255, 255, 255, 0.08);
+
+* {
+  font-family: "JetBrainsMono Nerd Font", sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+}
+
+/* ── window ────────────────────────────────────────────── */
+window {
+  background-color: @bg;
+  border: 1px solid @border;
+  border-radius: 12px;
+  color: @fg;
+}
+
+#outer-box {
+  padding: 12px;
+  border: none;
+  background-color: transparent;
+}
+
+/* ── search input ──────────────────────────────────────── */
+#input {
+  background-color: @bg-input;
+  color: @fg;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 12px;
+  margin-bottom: 10px;
+  caret-color: @accent;
+  outline: none;
+  box-shadow: none;
+}
+
+#input:focus {
+  border: none;
+  outline: none;
+  box-shadow: none;
+}
+
+#input image {
+  color: @muted;
+}
+
+#input placeholder {
+  color: @muted;
+}
+
+/* ── results list ──────────────────────────────────────── */
+#scroll {
+  border: none;
+  background-color: transparent;
+}
+
+#inner-box {
+  background-color: transparent;
+  border: none;
+}
+
+#entry {
+  padding: 8px 10px;
+  margin: 2px 0;
+  border-radius: 8px;
+  background-color: transparent;
+  color: @fg;
+}
+
+#entry:hover {
+  background-color: @bg-hover;
+}
+
+#entry:selected {
+  background-color: @accent;
+}
+
+#entry:selected #text {
+  color: #181820;
+  font-weight: 700;
+}
+
+#text {
+  color: @fg;
+  margin-left: 8px;
+}
+
+#img {
+  margin-right: 2px;
+}
+
+/* wofi marks the unselected/selected rows for keyboard nav */
+#unselected {
+  color: @fg;
+}
+
+#selected {
+  color: #181820;
+}

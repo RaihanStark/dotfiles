@@ -1,0 +1,97 @@
+# Palette shared with waybar / wofi / kitty.
+format = """
+$directory\
+$git_branch\
+$git_status\
+$nodejs$python$rust$golang$lua\
+$cmd_duration\
+$line_break\
+$character"""
+
+right_format = "$time"
+
+add_newline = true
+palette = "mocha"
+
+[palettes.mocha]
+bg      = "#181820"
+fg      = "#cdd6f4"
+muted   = "#7f849c"
+accent  = "#89b4fa"
+green   = "#a6e3a1"
+yellow  = "#f9e2af"
+red     = "#f38ba8"
+mauve   = "#cba6f7"
+teal    = "#94e2d5"
+peach   = "#fab387"
+
+[directory]
+style = "bold accent"
+format = "[$path]($style)[$read_only]($read_only_style) "
+truncation_length = 3
+truncate_to_repo = true
+read_only = " 󰌾"
+read_only_style = "red"
+
+[directory.substitutions]
+"~" = "~"
+
+[character]
+success_symbol = "[❯](bold accent)"
+error_symbol = "[❯](bold red)"
+vimcmd_symbol = "[❮](bold green)"
+
+[git_branch]
+symbol = " "
+style = "mauve"
+format = "[$symbol$branch]($style) "
+
+[git_status]
+style = "muted"
+format = "[[($conflicted$untracked$modified$staged$renamed$deleted)](muted)($ahead_behind$stashed)]($style) "
+conflicted = "[~](red)"
+untracked = "[?](muted)"
+modified = "[!](yellow)"
+staged = "[+](green)"
+renamed = "[»](mauve)"
+deleted = "[✘](red)"
+stashed = "[≡](teal)"
+ahead = "[⇡${count}](green)"
+behind = "[⇣${count}](yellow)"
+diverged = "[⇕](red)"
+
+[cmd_duration]
+min_time = 2000
+style = "muted"
+format = "[󱎫 $duration]($style) "
+
+[time]
+disabled = false
+style = "muted"
+format = "[$time]($style)"
+time_format = "%H:%M"
+
+[nodejs]
+symbol = " "
+style = "green"
+format = "[$symbol($version)]($style) "
+
+[python]
+symbol = " "
+style = "yellow"
+format = "[$symbol($version)]($style) "
+
+[rust]
+symbol = " "
+style = "peach"
+format = "[$symbol($version)]($style) "
+
+[golang]
+symbol = " "
+style = "teal"
+format = "[$symbol($version)]($style) "
+
+[lua]
+symbol = " "
+style = "accent"
+format = "[$symbol($version)]($style) "

@@ -1,0 +1,129 @@
+/* ── palette ───────────────────────────────────────────── */
+@define-color bg        #181820;
+@define-color bg-hover  rgba(255, 255, 255, 0.07);
+@define-color fg        #cdd6f4;
+@define-color muted     #7f849c;
+@define-color accent    #89b4fa;
+@define-color warning   #f9e2af;
+@define-color critical  #f38ba8;
+
+/* ── base ──────────────────────────────────────────────── */
+* {
+  font-family: "JetBrainsMono Nerd Font", sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  min-height: 0;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  text-shadow: none;
+}
+
+window#waybar {
+  background: transparent;
+  color: @fg;
+}
+
+/* the three module groups float as pills */
+.modules-left,
+.modules-center,
+.modules-right {
+  background-color: @bg;
+  border-radius: 12px;
+  padding: 0 4px;
+}
+
+/* ── workspaces ────────────────────────────────────────── */
+#workspaces {
+  padding: 0;
+}
+
+#workspaces button {
+  color: @muted;
+  padding: 0 9px;
+  margin: 4px 2px;
+  border-radius: 8px;
+  background: transparent;
+  transition: background-color 200ms ease, color 200ms ease;
+}
+
+#workspaces button:hover {
+  background-color: @bg-hover;
+  color: @fg;
+}
+
+#workspaces button.active {
+  background-color: @accent;
+  color: #181820;
+  font-weight: 700;
+}
+
+#workspaces button.urgent {
+  background-color: @critical;
+  color: #181820;
+}
+
+/* ── clock ─────────────────────────────────────────────── */
+#clock {
+  color: @fg;
+  padding: 0 14px;
+  margin: 4px 0;
+  font-weight: 600;
+  letter-spacing: 0.4px;
+}
+
+/* ── right side ────────────────────────────────────────── */
+#tray,
+#pulseaudio,
+#network,
+#battery {
+  color: @fg;
+  padding: 0 10px;
+  margin: 4px 2px;
+  border-radius: 8px;
+  background: transparent;
+  transition: background-color 200ms ease, color 200ms ease;
+}
+
+#pulseaudio:hover,
+#network:hover,
+#battery:hover {
+  background-color: @bg-hover;
+}
+
+#tray {
+  padding: 0 8px;
+}
+
+#tray > .passive {
+  -gtk-icon-effect: dim;
+}
+
+#tray > .needs-attention {
+  -gtk-icon-effect: highlight;
+}
+
+#pulseaudio.muted,
+#network.disconnected {
+  color: @muted;
+}
+
+#battery.warning:not(.charging) {
+  color: @warning;
+}
+
+#battery.critical:not(.charging) {
+  color: @critical;
+}
+
+/* ── tooltips ──────────────────────────────────────────── */
+tooltip {
+  background-color: #181820;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+}
+
+tooltip label {
+  color: @fg;
+  padding: 2px;
+}
