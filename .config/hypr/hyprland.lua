@@ -151,7 +151,7 @@ end)
 ---------------------
 
 -- Set programs that you use
-local terminal    = "kitty"
+local terminal    = "foot"
 local fileManager = "dolphin"
 local menu        = "pkill -x fuzzel || fuzzel"
 
