@@ -9,47 +9,49 @@
 }
 
 window#waybar {
-    background-color: #222222;
-    color: #bbbbbb;
-    border-bottom: 1px solid #444444;
+    background-color: #000000;
+    color: #ffffff;
+    border-bottom: 2px solid #282828;
 }
 
 #custom-dwm-layout {
-    background-color: #111111;
-    color: #005577;
-    font-weight: bold;
+    background-color: #ffffff;
+    color: #000000;
+    font-weight: 900;
     padding: 0 8px;
-    margin-right: 2px;
+    margin-right: 4px;
 }
 
 #workspaces button {
     background: transparent;
-    color: #bbbbbb;
-    padding: 0 7px;
+    color: #777777;
+    padding: 0 8px;
     margin: 0;
     border-radius: 0;
-}
-
-#workspaces button:hover {
-    background-color: #333333;
-    color: #eeeeee;
-}
-
-#workspaces button.active {
-    background-color: #005577;
-    color: #eeeeee;
     font-weight: bold;
 }
 
+#workspaces button:hover {
+    background-color: #222222;
+    color: #ffffff;
+}
+
+#workspaces button.active {
+    background-color: #ffffff;
+    color: #000000;
+    font-weight: 900;
+}
+
 #workspaces button.urgent {
-    background-color: #990000;
-    color: #eeeeee;
+    background-color: #ff3333;
+    color: #ffffff;
+    font-weight: 900;
 }
 
 #window {
-    color: #eeeeee;
-    padding: 0 12px;
-    font-weight: normal;
+    color: #ffffff;
+    padding: 0 14px;
+    font-weight: bold;
 }
 
 #cpu,
@@ -58,14 +60,17 @@ window#waybar {
 #custom-airpods,
 #network,
 #battery {
-    color: #bbbbbb;
-    padding: 0 4px;
+    color: #d0d0d0;
+    padding: 0 5px;
+    font-weight: bold;
 }
 
 #clock {
-    color: #eeeeee;
-    padding: 0 8px 0 4px;
-    font-weight: bold;
+    background-color: #ffffff;
+    color: #000000;
+    padding: 0 8px;
+    font-weight: 900;
+    margin-left: 6px;
 }
 
 #tray {

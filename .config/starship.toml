@@ -9,40 +9,28 @@ $character"""
 right_format = "$time"
 add_newline = false
 
-palette = "suckless"
-
-[palettes.suckless]
-bg     = "#1c1c1c"
-fg     = "#d0d0d0"
-muted  = "#777777"
-accent = "#005577"
-cyan   = "#458588"
-green  = "#98971a"
-yellow = "#d79921"
-red    = "#cc241d"
-
 [directory]
-style = "bold cyan"
+style = "bold white"
 format = "[$path]($style)[$read_only]($read_only_style) "
 truncation_length = 3
 truncate_to_repo = false
 
 [character]
-success_symbol = "[λ](bold cyan) "
-error_symbol = "[λ](bold red) "
+success_symbol = "[❯](bold white) "
+error_symbol = "[❯](bold red) "
 vimcmd_symbol = "[❮](bold green) "
 
 [git_branch]
 symbol = "git:"
-style = "yellow"
+style = "bold yellow"
 format = "[$symbol$branch]($style) "
 
 [git_status]
-style = "muted"
+style = "bold red"
 format = "[$all_status$ahead_behind]($style) "
 
 [time]
 disabled = false
 format = "[$time]($style)"
-style = "muted"
+style = "bold white"
 time_format = "%T"
