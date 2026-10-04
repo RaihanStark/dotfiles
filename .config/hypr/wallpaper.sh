@@ -2,7 +2,7 @@
 # hyprpaper 0.8.4 on this system ignores ~/.config/hypr/hyprpaper.conf
 # entirely (an invalid key in it produces no parse error), so the wallpaper
 # is applied over IPC once the daemon is accepting requests.
-WALLPAPER="$HOME/Pictures/wallpapers/blue.jpg"
+WALLPAPER="$HOME/Pictures/wallpapers/suckless-dark.png"
 
 pgrep -x hyprpaper >/dev/null 2>&1 || hyprpaper >/dev/null 2>&1 &
 

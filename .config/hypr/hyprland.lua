@@ -219,30 +219,28 @@ hl.env("XDG_CURRENT_DESKTOP", "Hyprland")
 -- Refer to https://wiki.hypr.land/Configuring/Basics/Variables/
 hl.config({
     general = {
-        gaps_in          = 6,
-        gaps_out         = 12,
+        gaps_in          = 0,
+        gaps_out         = 0,
 
-        border_size      = 2,
+        border_size      = 1,
 
         col              = {
-            -- accent #89b4fa -> mauve #cba6f7, the same accents used by
-            -- waybar, wofi, kitty, starship and the sddm greeter
-            active_border   = { colors = { "rgba(89b4faff)", "rgba(cba6f7ff)" }, angle = 45 },
-            inactive_border = "rgba(31324488)",
+            active_border   = "rgba(005577ff)",
+            inactive_border = "rgba(444444ff)",
         },
 
         -- Set to true to enable resizing windows by clicking and dragging on borders and gaps
-        resize_on_border = false,
+        resize_on_border = true,
 
         -- Please see https://wiki.hypr.land/Configuring/Advanced-and-Cool/Tearing/ before you turn this on
         allow_tearing    = false,
 
-        layout           = "dwindle",
+        layout           = "master",
     },
 
     decoration = {
-        rounding         = 8,
-        rounding_power   = 2,
+        rounding         = 0,
+        rounding_power   = 1,
 
         -- Change transparency of focused and unfocused windows
         active_opacity   = 1.0,
@@ -258,7 +256,7 @@ hl.config({
     },
 
     animations = {
-        enabled = true,
+        enabled = false,
     },
 })
 
