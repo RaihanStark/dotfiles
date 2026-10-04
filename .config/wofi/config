@@ -1,7 +1,7 @@
 show=drun
 prompt=run:
 width=1920
-height=26
+height=32
 location=top
 orientation=horizontal
 halign=fill
