@@ -46,16 +46,52 @@ return {
             "hrsh7th/cmp-nvim-lsp",
         },
         config = function()
-            local capabilities = require("cmp_nvim_lsp").default_capabilities()
+            -- Merge default client capabilities with cmp capabilities
+            local capabilities = vim.tbl_deep_extend(
+                "force",
+                vim.lsp.protocol.make_client_capabilities(),
+                require("cmp_nvim_lsp").default_capabilities()
+            )
+
+            -- Enable dynamicRegistration for file watching (crucial on Linux so gopls
+            -- and other servers detect file changes across the project/package)
+            capabilities.workspace = capabilities.workspace or {}
+            capabilities.workspace.didChangeWatchedFiles = {
+                dynamicRegistration = true,
+            }
+
+            -- Set global defaults for all LSP servers
+            vim.lsp.config("*", {
+                capabilities = capabilities,
+            })
+
+            -- Go-specific configuration (gopls)
+            vim.lsp.config("gopls", {
+                settings = {
+                    gopls = {
+                        analyses = {
+                            unusedparams = true,
+                        },
+                        staticcheck = true,
+                        completeUnimported = true,
+                        usePlaceholders = true,
+                        directoryFilters = { "-.git", "-.vscode", "-.idea", "-node_modules" },
+                    },
+                },
+            })
+
             local servers = { "lua_ls", "ts_ls", "pyright", "gopls", "svelte", "html", "cssls", "jsonls" }
 
-            -- Configure and enable each server natively without require("lspconfig")
+            -- Enable configured servers natively
             for _, server in ipairs(servers) do
-                vim.lsp.config(server, {
-                    capabilities = capabilities,
-                })
                 vim.lsp.enable(server)
             end
+
+            -- Convenience command & keymap to restart LSP without exiting Neovim
+            vim.api.nvim_create_user_command("LspRestart", function()
+                vim.cmd("lsp restart")
+            end, { desc = "Restart LSP servers" })
+            vim.keymap.set("n", "<leader>lr", "<cmd>lsp restart<CR>", { desc = "Restart LSP" })
 
             -- Global LSP Keymaps (triggered when an LSP attaches to a buffer)
             vim.api.nvim_create_autocmd("LspAttach", {

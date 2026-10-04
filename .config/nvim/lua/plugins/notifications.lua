@@ -27,6 +27,15 @@ return {
                     ["cmp.entry.get_documentation"] = true,
                 },
             },
+            routes = {
+                {
+                    filter = {
+                        event = "notify",
+                        find = "watch%.watchdirs",
+                    },
+                    opts = { skip = true },
+                },
+            },
             presets = {
                 bottom_search = false,
                 command_palette = true,
@@ -45,9 +54,15 @@ return {
             fps = 60,
             level = "info",
         },
-        config = function()
-            require("notify").setup()
-            vim.notify = require("notify")
+        config = function(_, opts)
+            local notify = require("notify")
+            notify.setup(opts)
+            vim.notify = function(msg, level, opt)
+                if type(msg) == "string" and msg:find("watch%.watchdirs") then
+                    return
+                end
+                return notify(msg, level, opt)
+            end
         end,
     },
 
