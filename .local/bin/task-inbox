@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+if pgrep -x fuzzel >/dev/null 2>&1; then
+    pkill -x fuzzel
+    exit 0
+fi
+
+INPUT="$(fuzzel --dmenu --prompt-only="inbox ❯ " --placeholder="Quick capture (e.g. fix bug prio:H due:tomorrow)..." --width=55 || true)"
+
+# Trim whitespace
+INPUT="${INPUT#"${INPUT%%[![:space:]]*}"}"
+INPUT="${INPUT%"${INPUT##*[![:space:]]}"}"
+
+if [[ -z "$INPUT" ]]; then
+    exit 0
+fi
+
+# Split arguments so modifiers like prio:H, due:tomorrow, project:x, +tag work naturally
+# shellcheck disable=SC2086
+if OUTPUT="$(task rc.confirmation=off add +inbox $INPUT 2>&1)"; then
+    notify-send -t 2500 "Task Inbox (+inbox)" "$INPUT"
+else
+    notify-send -u critical -t 4000 "Task Inbox Error" "$OUTPUT"
+fi

@@ -458,14 +458,15 @@ hl.workspace_rule({
 hl.bind("XF86Favorites", hl.dsp.workspace.toggle_special("scratchpad"))
 hl.bind(mainMod .. " + F12", hl.dsp.workspace.toggle_special("scratchpad"))
 
--- Btop fullscreen scratchpad (Fn+F9 / Settings / Tools, plus Super+F9)
+-- Taskwarrior TUI scratchpad (Fn+F9 / Settings / Tools, plus Super+F9) & Quick Inbox (Super+T)
 hl.workspace_rule({
-    workspace = "special:btop",
-    on_created_empty = "sh -c 'footclient -F -a foot-btop btop || foot -F -a foot-btop btop'",
+    workspace = "special:todo",
+    on_created_empty = "sh -c 'footclient -a foot-todo taskwarrior-tui || foot -a foot-todo taskwarrior-tui'",
 })
-hl.bind("XF86Tools", hl.dsp.workspace.toggle_special("btop"))
-hl.bind("XF86NotificationCenter", hl.dsp.workspace.toggle_special("btop"))
-hl.bind(mainMod .. " + F9", hl.dsp.workspace.toggle_special("btop"))
+hl.bind("XF86Tools", hl.dsp.workspace.toggle_special("todo"))
+hl.bind("XF86NotificationCenter", hl.dsp.workspace.toggle_special("todo"))
+hl.bind(mainMod .. " + F9", hl.dsp.workspace.toggle_special("todo"))
+hl.bind(mainMod .. " + T", hl.dsp.exec_cmd("/home/han/.local/bin/task-inbox"))
 
 
 
@@ -478,17 +479,17 @@ hl.bind(mainMod .. " + mouse_up", hl.dsp.focus({ workspace = "e-1" }))
 hl.bind(mainMod .. " + mouse:272", hl.dsp.window.drag(), { mouse = true })
 hl.bind(mainMod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true })
 
--- Laptop multimedia keys for volume and LCD brightness
-hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+"),
+-- Laptop multimedia keys for volume and LCD brightness (with Dunst OSD popups)
+hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("/home/han/.config/hypr/osd.sh vol-up"),
     { locked = true, repeating = true })
-hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"),
+hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd("/home/han/.config/hypr/osd.sh vol-down"),
     { locked = true, repeating = true })
-hl.bind("XF86AudioMute", hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"),
+hl.bind("XF86AudioMute", hl.dsp.exec_cmd("/home/han/.config/hypr/osd.sh vol-mute"),
     { locked = true, repeating = true })
-hl.bind("XF86AudioMicMute", hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"),
+hl.bind("XF86AudioMicMute", hl.dsp.exec_cmd("/home/han/.config/hypr/osd.sh mic-mute"),
     { locked = true, repeating = true })
-hl.bind("XF86MonBrightnessUp", hl.dsp.exec_cmd("brightnessctl -e4 -n2 set 5%+"), { locked = true, repeating = true })
-hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd("brightnessctl -e4 -n2 set 5%-"), { locked = true, repeating = true })
+hl.bind("XF86MonBrightnessUp", hl.dsp.exec_cmd("/home/han/.config/hypr/osd.sh bri-up"), { locked = true, repeating = true })
+hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd("/home/han/.config/hypr/osd.sh bri-down"), { locked = true, repeating = true })
 
 -- Requires playerctl
 hl.bind("XF86AudioNext", hl.dsp.exec_cmd("playerctl next"), { locked = true })
@@ -557,18 +558,20 @@ hl.window_rule({
         class = "^foot-scratchpad$",
     },
     float = true,
-    size = { "80%", "75%" },
+    size = "monitor_w*0.80 monitor_h*0.75",
     center = true,
     workspace = "special:scratchpad",
 })
 
 hl.window_rule({
-    name = "scratchpad-btop",
+    name = "scratchpad-todo",
     match = {
-        class = "^foot-btop$",
+        class = "^foot-todo$",
     },
-    fullscreen = true,
-    workspace = "special:btop",
+    float = true,
+    size = "monitor_w*0.85 monitor_h*0.85",
+    center = true,
+    workspace = "special:todo",
 })
 
 

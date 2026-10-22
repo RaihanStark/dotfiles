@@ -1,0 +1,83 @@
+# [Created by task 3.5.0 10/22/2026 15:34:28]
+data.location=/home/han/.task
+news.version=3.5.0
+search.case.sensitive=no
+fontunderline=no
+
+# To use the default location of the XDG directories,
+# move this configuration file from ~/.taskrc to ~/.config/task/taskrc and update location config as follows:
+
+#data.location=~/.local/share/task
+#hooks.location=~/.config/task/hooks
+
+# Disable color merging so foregrounds and backgrounds never clash
+rule.color.merge=no
+
+# Clean, high-contrast foreground-only palette (no clashing row backgrounds!)
+color.label=bold white
+color.label.sort=bold cyan
+color.header=bold cyan
+color.footnote=bright black
+color.warning=bold yellow
+color.error=bold red
+color.alternate=
+
+# Task states (foreground-only so selection highlight stays 100% readable)
+color.active=bold green
+color.overdue=bold red
+color.due.today=bold yellow
+color.due=yellow
+color.scheduled=cyan
+color.recurring=magenta
+color.blocked=bright black
+color.blocking=bold white
+color.completed=bright black
+color.deleted=bright black
+
+# Priorities
+color.uda.priority.H=bold red
+color.uda.priority.M=yellow
+color.uda.priority.L=cyan
+
+# Tags & Projects
+color.tag.next=bold green
+color.tagged=
+color.project.none=
+
+# Calendar colors
+color.calendar.today=black on green
+color.calendar.due=black on yellow
+color.calendar.due.today=black on yellow
+color.calendar.overdue=black on red
+color.calendar.weekend=bright black
+color.calendar.weeknumber=cyan
+
+# Taskwarrior-TUI interface styling
+uda.taskwarrior-tui.style.title=bold white
+uda.taskwarrior-tui.style.title.border=bright black
+uda.taskwarrior-tui.style.navbar=black on white
+uda.taskwarrior-tui.style.command=white on black
+uda.taskwarrior-tui.style.calendar.title=bold cyan
+uda.taskwarrior-tui.style.calendar.today=bold green
+uda.taskwarrior-tui.selection.bold=true
+uda.taskwarrior-tui.selection.reverse=true
+uda.taskwarrior-tui.selection.indicator=❯ 
+uda.taskwarrior-tui.mark-selection.indicator=❯✓ 
+uda.taskwarrior-tui.task-report.show-info=false
+uda.taskwarrior-tui.task-report.use-all-tasks-for-completion=true
+
+# Clean, readable 'next' table (single-line rows in top table, full notes in bottom pane)
+report.next.columns=id,start.age,priority,project,tags,due.relative,description.count,urgency
+report.next.labels=ID,Active,P,Project,Tags,Due,Description,Urg
+
+# Multi-line Notes UDA + 'n' shortcut in taskwarrior-tui to edit in Neovim
+uda.notes.type=string
+uda.notes.label=Detailed Notes
+uda.taskwarrior-tui.shortcuts.1=/home/han/.local/bin/task-note
+uda.taskwarrior-tui.keyconfig.shortcut1=n
+
+# Contexts (Press 'c' inside taskwarrior-tui)
+context.inbox.read=+inbox
+context.inbox.write=+inbox
+
+context=inbox

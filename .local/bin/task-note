@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+UUID="${1:-}"
+if [[ -z "$UUID" ]]; then
+    exit 0
+fi
+
+TMPFILE="/tmp/task-note-${UUID}.md"
+trap 'rm -f "$TMPFILE"' EXIT
+
+# Fetch existing multi-line note from Taskwarrior UDA
+EXISTING="$(task rc.verbose=nothing _get "${UUID}.notes" 2>/dev/null || true)"
+printf "%s" "$EXISTING" > "$TMPFILE"
+
+# Open in Neovim as Markdown
+nvim -c "set ft=markdown wrap linebreak" "$TMPFILE"
+
+# Read updated note content (strip trailing blank lines)
+NEW_CONTENT="$(awk '{lines[NR]=$0} END {for(i=NR;i>=1;i--) if(lines[i]!="") {last=i; break} for(i=1;i<=last;i++) print lines[i]}' "$TMPFILE")"
+
+if [[ "$NEW_CONTENT" != "$EXISTING" ]]; then
+    if [[ -n "$NEW_CONTENT" ]]; then
+        task rc.confirmation=off rc.verbose=nothing "$UUID" modify +note "notes:${NEW_CONTENT}" >/dev/null
+    else
+        task rc.confirmation=off rc.verbose=nothing "$UUID" modify -note "notes:" >/dev/null
+    fi
+fi

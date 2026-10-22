@@ -91,7 +91,8 @@
     },
     "custom/bat-volt": {
         "interval": 5,
-        "exec": "awk 'FILENAME~/voltage_now/{v=$1/1e6} FILENAME~/power_now/{p=$1/1e6} FILENAME~/capacity$/{c=$1} FILENAME~/status/{s=$1} END{sym=(s==\"Charging\"?\"+\":(s==\"Discharging\"?\"\":\"~\")); printf \"[bat: %s%d%% | %.2fV | %.1fW]\\n\", sym, c, v, p}' /sys/class/power_supply/BAT0/voltage_now /sys/class/power_supply/BAT0/power_now /sys/class/power_supply/BAT0/capacity /sys/class/power_supply/BAT0/status",
+        "return-type": "json",
+        "exec": "awk 'FILENAME~/voltage_now/{v=$1/1e6} FILENAME~/power_now/{p=$1/1e6} FILENAME~/capacity$/{c=$1} FILENAME~/status/{s=$1} END{sym=(s==\"Charging\"?\"+\":(s==\"Discharging\"?\"\":\"~\")); cls=(c<15 && s!=\"Charging\"?\"critical\":\"normal\"); printf \"{\\\"text\\\": \\\"[bat: %s%d%% | %.2fV | %.1fW]\\\", \\\"class\\\": \\\"%s\\\"}\\n\", sym, c, v, p, cls}' /sys/class/power_supply/BAT0/voltage_now /sys/class/power_supply/BAT0/power_now /sys/class/power_supply/BAT0/capacity /sys/class/power_supply/BAT0/status",
         "tooltip": false
     },
     "clock": {

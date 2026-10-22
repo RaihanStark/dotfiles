@@ -86,7 +86,8 @@ window#waybar {
     font-weight: bold;
 }
 
-#temperature.critical {
+#temperature.critical,
+#custom-bat-volt.critical {
     color: #ff5555;
 }
 

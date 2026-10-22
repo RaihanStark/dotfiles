@@ -24,9 +24,10 @@
     progress_bar = true
     progress_bar_height = 6
     progress_bar_corner_radius = 0
-    progress_bar_frame_width = 0
+    progress_bar_frame_width = 1
     progress_bar_min_width = 150
     progress_bar_max_width = 380
+    highlight = "#ffffff"
 
     font = JetBrainsMono Nerd Font 10
     line_height = 2
