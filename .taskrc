@@ -69,6 +69,7 @@ uda.taskwarrior-tui.task-report.use-all-tasks-for-completion=true
 # Clean, readable 'next' table (single-line rows in top table, full notes in bottom pane)
 report.next.columns=id,start.age,priority,project,tags,due.relative,description.count,urgency
 report.next.labels=ID,Active,P,Project,Tags,Due,Description,Urg
+report.next.filter=+PENDING -WAITING
 
 # Multi-line Notes UDA + 'n' shortcut in taskwarrior-tui to edit in Neovim
 uda.notes.type=string
@@ -80,4 +81,3 @@ uda.taskwarrior-tui.keyconfig.shortcut1=n
 context.inbox.read=+inbox
 context.inbox.write=+inbox
 
-context=inbox
