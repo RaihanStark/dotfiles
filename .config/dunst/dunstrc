@@ -1,0 +1,71 @@
+# High-Contrast Monochrome Notifications
+[global]
+    monitor = 0
+    follow = none
+    origin = top-right
+    offset = (8, 26)
+    width = (280, 420)
+    height = (0, 250)
+    scale = 0
+    notification_limit = 4
+    gap_size = 4
+
+    corner_radius = 0
+    corners = all
+    frame_width = 2
+    frame_color = "#ffffff"
+    separator_height = 1
+    separator_color = frame
+    padding = 8
+    horizontal_padding = 12
+    text_icon_padding = 8
+    transparency = 0
+
+    progress_bar = true
+    progress_bar_height = 6
+    progress_bar_corner_radius = 0
+    progress_bar_frame_width = 0
+    progress_bar_min_width = 150
+    progress_bar_max_width = 380
+
+    font = JetBrainsMono Nerd Font 10
+    line_height = 2
+    markup = full
+    format = "<b>%s</b>\n%b"
+    alignment = left
+    vertical_alignment = center
+    ellipsize = middle
+    word_wrap = yes
+
+    show_age_threshold = 60
+    stack_duplicates = true
+    hide_duplicate_count = false
+    show_indicators = no
+    indicate_hidden = yes
+    sort = yes
+
+    enable_recursive_icon_lookup = true
+    icon_theme = "breeze-dark"
+    icon_position = left
+    min_icon_size = 24
+    max_icon_size = 32
+
+    dmenu = /usr/bin/wofi --show dmenu
+
+[urgency_low]
+    background = "#000000"
+    foreground = "#aaaaaa"
+    frame_color = "#555555"
+    timeout = 4
+
+[urgency_normal]
+    background = "#000000"
+    foreground = "#ffffff"
+    frame_color = "#ffffff"
+    timeout = 6
+
+[urgency_critical]
+    background = "#000000"
+    foreground = "#ffffff"
+    frame_color = "#ff3333"
+    timeout = 0

@@ -1,0 +1,30 @@
+[Default Applications]
+x-scheme-handler/claude-cli=claude-code-url-handler.desktop
+image/png=imv.desktop
+image/jpeg=imv.desktop
+image/gif=imv.desktop
+image/webp=imv.desktop
+image/bmp=imv.desktop
+image/tiff=imv.desktop
+image/x-icon=imv.desktop
+image/svg+xml=imv.desktop
+image/avif=imv.desktop
+image/heif=imv.desktop
+image/jxl=imv.desktop
+image/jpg=imv.desktop
+image/x-png=imv.desktop
+
+[Added Associations]
+image/png=imv.desktop;firefox.desktop;
+image/jpeg=imv.desktop;firefox.desktop;
+image/gif=imv.desktop;firefox.desktop;
+image/webp=imv.desktop;firefox.desktop;
+image/bmp=imv.desktop;firefox.desktop;
+image/tiff=imv.desktop;firefox.desktop;
+image/x-icon=imv.desktop;firefox.desktop;
+image/svg+xml=imv.desktop;firefox.desktop;
+image/avif=imv.desktop;firefox.desktop;
+image/heif=imv.desktop;firefox.desktop;
+image/jxl=imv.desktop;firefox.desktop;
+image/jpg=imv.desktop;firefox.desktop;
+image/x-png=imv.desktop;firefox.desktop;

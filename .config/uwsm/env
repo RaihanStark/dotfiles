@@ -1,0 +1,7 @@
+# ~/.config/uwsm/env
+# Resolve Intel UHD 620 card device node dynamically without colons for Aquamarine
+export AQ_DRM_DEVICES="$(readlink -f /dev/dri/by-path/pci-0000:00:02.0-card 2>/dev/null || echo /dev/dri/card1)"
+
+# Direct default Wayland/X11 apps and compositor to Mesa (Intel UHD 620)
+# Prevents GLVND from loading libEGL_nvidia.so and holding NVIDIA dGPU active
+export __EGL_VENDOR_LIBRARY_FILENAMES="/usr/share/glvnd/egl_vendor.d/50_mesa.json"

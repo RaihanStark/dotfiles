@@ -1,0 +1,19 @@
+# Mocha - matches waybar / wofi / kitty / dunst
+
+[options]
+background = 181820
+overlay = false
+overlay_font = JetBrainsMono Nerd Font:10
+overlay_text_color = cdd6f4
+overlay_background_color = 181820
+overlay_background_alpha = e6
+overlay_text = [${imv_current_index}/${imv_file_count}] ${imv_current_file_basename}
+scaling_mode = shrink
+upscaling_method = linear
+title_text = imv - ${imv_current_file_basename}
+
+[binds]
+# vim-ish navigation on top of the defaults
+<comma> = prev
+<period> = next
+i = overlay
