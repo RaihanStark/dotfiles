@@ -85,22 +85,24 @@ local function enable_laptop_screen()
     if f then
         for raw_line in f:lines() do
             local line = raw_line:gsub("#.*", ""):match("^%s*(.-)%s*$")
-            if line and line:find("^monitor%s*=%s*" .. internal_display) then
+            if line and line:find("^monitor%s*=") then
                 local parts = {}
                 for part in line:match("^monitor%s*=%s*(.*)$"):gmatch("[^,]+") do
                     table.insert(parts, part:match("^%s*(.-)%s*$"))
                 end
-                if #parts >= 4 then
-                    hl.monitor({
-                        output = internal_display,
-                        mode = parts[2],
-                        position = parts[3],
-                        scale = tonumber(parts[4]) or 1.5,
-                        disabled = false,
-                    })
-                    configured = true
+                if parts[1] == internal_display then
+                    if #parts >= 4 and parts[2] ~= "disable" then
+                        hl.monitor({
+                            output = internal_display,
+                            mode = parts[2],
+                            position = parts[3],
+                            scale = tonumber(parts[4]) or 1.0,
+                            disabled = false,
+                        })
+                        configured = true
+                    end
+                    break
                 end
-                break
             end
         end
         f:close()
@@ -110,7 +112,7 @@ local function enable_laptop_screen()
             output = internal_display,
             mode = "preferred",
             position = "auto",
-            scale = 1.5,
+            scale = 1.0,
             disabled = false,
         })
     end
@@ -151,9 +153,10 @@ end)
 ---------------------
 
 -- Set programs that you use
-local terminal    = "foot"
+local terminal    = "footclient"
 local fileManager = "dolphin"
 local menu        = "pkill -x fuzzel || fuzzel"
+local browser     = "firefox"
 
 
 -------------------
@@ -167,8 +170,6 @@ local menu        = "pkill -x fuzzel || fuzzel"
 --
 hl.on("hyprland.start", function()
     hl.exec_cmd("waybar")
-    hl.exec_cmd("/home/han/.config/hypr/wallpaper.sh")
-    hl.exec_cmd("/home/han/.local/bin/airpods-daemon.sh")
 end)
 
 
@@ -180,6 +181,16 @@ end)
 
 hl.env("XCURSOR_SIZE", "24")
 hl.env("HYPRCURSOR_SIZE", "24")
+
+-- Restrict Aquamarine to Intel UHD 620 so NVIDIA dGPU is free to sleep/suspend
+local intel_card = "/dev/dri/card1"
+local pci_intel = io.popen("readlink -f /dev/dri/by-path/pci-0000:00:02.0-card 2>/dev/null")
+if pci_intel then
+    local path = pci_intel:read("*l")
+    pci_intel:close()
+    if path and path ~= "" then intel_card = path end
+end
+hl.env("AQ_DRM_DEVICES", intel_card)
 
 -- Qt apps: route theming through qt6ct/qt5ct, which read the Mocha
 -- palette in ~/.config/qt{5,6}ct/colors/Mocha.conf. KDE apps (dolphin)
@@ -333,8 +344,9 @@ hl.config({
 
 hl.config({
     misc = {
-        force_default_wallpaper = 0,    -- 0 disables the built-in random wallpapers (hyprpaper draws ours)
-        disable_hyprland_logo   = true, -- our own wallpaper is drawn by hyprpaper
+        force_default_wallpaper = 0,    -- 0 disables the built-in random wallpapers
+        disable_hyprland_logo   = true, -- pure black background, no hyprpaper needed
+        background_color        = "rgba(000000ff)",
     },
 })
 
@@ -364,10 +376,22 @@ hl.config({
     },
 })
 
+hl.config({
+    gestures = {
+        workspace_swipe_touch = true,
+    },
+})
+
 hl.gesture({
     fingers = 3,
     direction = "horizontal",
     action = "workspace"
+})
+
+-- Lock touchscreen coordinates to laptop screen (eDP-1)
+hl.device({
+    name = "elan-touchscreen",
+    output = "eDP-1",
 })
 
 ---------------------
@@ -386,6 +410,7 @@ hl.bind(mainMod .. " + SHIFT + M", hl.dsp.exec_cmd("systemctl poweroff"))
 hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(fileManager))
 hl.bind(mainMod .. " + V", hl.dsp.window.float({ action = "toggle" }))
 hl.bind(mainMod .. " + R", hl.dsp.exec_cmd(menu))
+hl.bind(mainMod .. " + F", hl.dsp.exec_cmd(browser))
 
 -- Print: select a region, copy it to the clipboard and save to
 -- ~/Pictures/Screenshots. See ~/.config/hypr/screenshot.sh
@@ -424,6 +449,26 @@ end
 -- Example special workspace (scratchpad)
 hl.bind(mainMod .. " + S", hl.dsp.workspace.toggle_special("magic"))
 hl.bind(mainMod .. " + SHIFT + S", hl.dsp.window.move({ workspace = "special:magic" }))
+
+-- Foot scratchpad terminal (Fn+F12 / Favorite function, plus Super+F12)
+hl.workspace_rule({
+    workspace = "special:scratchpad",
+    on_created_empty = "sh -c 'footclient -a foot-scratchpad || foot -a foot-scratchpad'",
+})
+hl.bind("XF86Favorites", hl.dsp.workspace.toggle_special("scratchpad"))
+hl.bind(mainMod .. " + F12", hl.dsp.workspace.toggle_special("scratchpad"))
+
+-- Btop fullscreen scratchpad (Fn+F9 / Settings / Tools, plus Super+F9)
+hl.workspace_rule({
+    workspace = "special:btop",
+    on_created_empty = "sh -c 'footclient -F -a foot-btop btop || foot -F -a foot-btop btop'",
+})
+hl.bind("XF86Tools", hl.dsp.workspace.toggle_special("btop"))
+hl.bind("XF86NotificationCenter", hl.dsp.workspace.toggle_special("btop"))
+hl.bind(mainMod .. " + F9", hl.dsp.workspace.toggle_special("btop"))
+
+
+
 
 -- Scroll through existing workspaces with mainMod + scroll
 hl.bind(mainMod .. " + mouse_down", hl.dsp.focus({ workspace = "e+1" }))
@@ -505,6 +550,28 @@ hl.window_rule({
     size = { "600", "500" },
     center = true,
 })
+
+hl.window_rule({
+    name = "scratchpad-foot",
+    match = {
+        class = "^foot-scratchpad$",
+    },
+    float = true,
+    size = { "80%", "75%" },
+    center = true,
+    workspace = "special:scratchpad",
+})
+
+hl.window_rule({
+    name = "scratchpad-btop",
+    match = {
+        class = "^foot-btop$",
+    },
+    fullscreen = true,
+    workspace = "special:btop",
+})
+
+
 
 -- Layer rules also return a handle.
 -- local overlayLayerRule = hl.layer_rule({

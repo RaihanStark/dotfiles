@@ -20,8 +20,11 @@
         "tray",
         "pulseaudio",
         "custom/airpods",
+        "cpu",
+        "temperature",
+        "custom/mem",
         "network",
-        "battery",
+        "custom/bat-volt",
         "clock"
     ],
     "custom/dwm-layout": {
@@ -48,26 +51,51 @@
         "exec": "airpods-tui --waybar-watch",
         "return-type": "json",
         "format": "[pods: {text}]",
-        "on-click": "kitty --class float-term airpods-tui"
+        "hide-empty-text": true,
+        "on-click": "footclient --app-id=float-term airpods-tui"
+    },
+    "cpu": {
+        "interval": 5,
+        "format": "[cpu: {usage}% |",
+        "tooltip": false
+    },
+    "temperature": {
+        "interval": 5,
+        "thermal-zone": 6,
+        "critical-threshold": 85,
+        "format": "{temperatureC}°C]",
+        "tooltip": false
+    },
+    "custom/mem": {
+        "interval": 5,
+        "exec": "awk '/MemTotal/{t=$2} /MemFree/{f=$2} /Buffers/{b=$2} /^Cached/{c=$2} /SReclaimable/{s=$2} END{m=(t-f-b-c-s)/1024; if(m<1024) printf \"[mem: %.0fM]\\n\", m; else printf \"[mem: %.2fG]\\n\", m/1024}' /proc/meminfo",
+        "tooltip": false
     },
     "network": {
         "format-wifi": "[wifi: {essid}]",
         "format-ethernet": "[eth: up]",
         "format-disconnected": "[net: down]",
+        "on-click": "footclient --app-id=float-term nmtui",
         "tooltip": false
     },
     "battery": {
+        "interval": 2,
         "states": {
             "good": 95,
             "warning": 30,
             "critical": 15
         },
-        "format": "[bat: {capacity}%]",
-        "format-charging": "[bat: +{capacity}%]",
+        "format": "[bat: {capacity}% {power:.1f}W]",
+        "format-charging": "[bat: +{capacity}% {power:.1f}W]",
         "format-plugged": "[bat: ~{capacity}%]"
     },
+    "custom/bat-volt": {
+        "interval": 5,
+        "exec": "awk 'FILENAME~/voltage_now/{v=$1/1e6} FILENAME~/power_now/{p=$1/1e6} FILENAME~/capacity$/{c=$1} FILENAME~/status/{s=$1} END{sym=(s==\"Charging\"?\"+\":(s==\"Discharging\"?\"\":\"~\")); printf \"[bat: %s%d%% | %.2fV | %.1fW]\\n\", sym, c, v, p}' /sys/class/power_supply/BAT0/voltage_now /sys/class/power_supply/BAT0/power_now /sys/class/power_supply/BAT0/capacity /sys/class/power_supply/BAT0/status",
+        "tooltip": false
+    },
     "clock": {
-        "interval": 1,
+        "interval": 30,
         "format": "{:%Y-%m-%d %H:%M}",
         "tooltip-format": "<tt>{calendar}</tt>"
     },

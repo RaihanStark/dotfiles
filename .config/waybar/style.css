@@ -64,11 +64,35 @@ window#waybar {
 
 #pulseaudio,
 #custom-airpods,
+#memory,
+#custom-mem,
 #network,
-#battery {
+#battery,
+#custom-bat-volt {
     color: #d0d0d0;
     padding: 0 6px;
     font-weight: bold;
+}
+
+#cpu {
+    color: #d0d0d0;
+    padding: 0 2px 0 6px;
+    font-weight: bold;
+}
+
+#temperature {
+    color: #d0d0d0;
+    padding: 0 6px 0 2px;
+    font-weight: bold;
+}
+
+#temperature.critical {
+    color: #ff5555;
+}
+
+#custom-airpods.disconnected {
+    padding: 0;
+    margin: 0;
 }
 
 #clock {
