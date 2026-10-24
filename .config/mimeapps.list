@@ -17,6 +17,8 @@ x-scheme-handler/mailto=userapp-Thunderbird-PQOEX3.desktop
 x-scheme-handler/mid=userapp-Thunderbird-PQOEX3.desktop
 message/rfc822=userapp-Thunderbird-PQOEX3.desktop
 x-scheme-handler/net.thunderbird=userapp-Thunderbird-IY8CX3.desktop
+inode/directory=yazi.desktop
+x-scheme-handler/ytmd=net.venipa.ytmdesktop.desktop
 
 [Added Associations]
 image/png=imv.desktop;firefox.desktop;
@@ -36,3 +38,4 @@ x-scheme-handler/mailto=userapp-Thunderbird-PQOEX3.desktop;
 x-scheme-handler/mid=userapp-Thunderbird-PQOEX3.desktop;
 message/rfc822=userapp-Thunderbird-PQOEX3.desktop;
 x-scheme-handler/net.thunderbird=userapp-Thunderbird-IY8CX3.desktop;
+x-scheme-handler/ytmd=net.venipa.ytmdesktop.desktop;

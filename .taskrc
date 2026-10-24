@@ -31,7 +31,7 @@ color.scheduled=cyan
 color.recurring=magenta
 color.blocked=bright black
 color.blocking=bold white
-color.completed=bright black
+color.completed=color248
 color.deleted=bright black
 
 # Priorities
@@ -67,8 +67,8 @@ uda.taskwarrior-tui.task-report.show-info=false
 uda.taskwarrior-tui.task-report.use-all-tasks-for-completion=true
 
 # Clean, readable 'next' table (single-line rows in top table, full notes in bottom pane)
-report.next.columns=id,start.age,priority,project,tags,due.relative,description.count,urgency
-report.next.labels=ID,Active,P,Project,Tags,Due,Description,Urg
+report.next.columns=id,start.age,priority,project,tags,scheduled.relative,due.relative,description.count,urgency
+report.next.labels=ID,Active,P,Project,Tags,Scheduled,Due,Description,Urg
 report.next.filter=+PENDING -WAITING
 
 # Multi-line Notes UDA + 'n' shortcut in taskwarrior-tui to edit in Neovim

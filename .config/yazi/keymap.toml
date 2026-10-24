@@ -1,0 +1,4 @@
+[mgr]
+prepend_keymap = [
+	{ on = [ "g", "m" ], run = "cd /run/media/han", desc = "Go to mounted media" },
+]

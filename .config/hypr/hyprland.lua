@@ -154,7 +154,7 @@ end)
 
 -- Set programs that you use
 local terminal    = "footclient"
-local fileManager = "dolphin"
+local fileManager = "sh -c 'footclient -a foot-yazi yazi || foot -a foot-yazi yazi'"
 local menu        = "pkill -x fuzzel || fuzzel"
 local browser     = "firefox"
 
@@ -170,6 +170,7 @@ local browser     = "firefox"
 --
 hl.on("hyprland.start", function()
     hl.exec_cmd("waybar")
+    hl.exec_cmd("udiskie")
 end)
 
 
@@ -394,6 +395,11 @@ hl.device({
     output = "eDP-1",
 })
 
+hl.device({
+    name = "synaptics-tm3471-020",
+    sensitivity = 0.5, -- Range: -1.0 to 1.0 (0 is default, negative is slower,positive is faster)
+})
+
 ---------------------
 ---- KEYBINDINGS ----
 ---------------------
@@ -411,6 +417,7 @@ hl.bind(mainMod .. " + E", hl.dsp.exec_cmd(fileManager))
 hl.bind(mainMod .. " + V", hl.dsp.window.float({ action = "toggle" }))
 hl.bind(mainMod .. " + R", hl.dsp.exec_cmd(menu))
 hl.bind(mainMod .. " + F", hl.dsp.exec_cmd(browser))
+hl.bind(mainMod .. " + B", hl.dsp.exec_cmd("rofi-rbw"))
 
 -- Print: select a region, copy it to the clipboard and save to
 -- ~/Pictures/Screenshots. See ~/.config/hypr/screenshot.sh
@@ -467,6 +474,9 @@ hl.bind("XF86Tools", hl.dsp.workspace.toggle_special("todo"))
 hl.bind("XF86NotificationCenter", hl.dsp.workspace.toggle_special("todo"))
 hl.bind(mainMod .. " + F9", hl.dsp.workspace.toggle_special("todo"))
 hl.bind(mainMod .. " + T", hl.dsp.exec_cmd("/home/han/.local/bin/task-inbox"))
+hl.bind(mainMod .. " + X", hl.dsp.exec_cmd("rofimoji"))
+
+
 
 
 
@@ -488,8 +498,10 @@ hl.bind("XF86AudioMute", hl.dsp.exec_cmd("/home/han/.config/hypr/osd.sh vol-mute
     { locked = true, repeating = true })
 hl.bind("XF86AudioMicMute", hl.dsp.exec_cmd("/home/han/.config/hypr/osd.sh mic-mute"),
     { locked = true, repeating = true })
-hl.bind("XF86MonBrightnessUp", hl.dsp.exec_cmd("/home/han/.config/hypr/osd.sh bri-up"), { locked = true, repeating = true })
-hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd("/home/han/.config/hypr/osd.sh bri-down"), { locked = true, repeating = true })
+hl.bind("XF86MonBrightnessUp", hl.dsp.exec_cmd("/home/han/.config/hypr/osd.sh bri-up"),
+    { locked = true, repeating = true })
+hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd("/home/han/.config/hypr/osd.sh bri-down"),
+    { locked = true, repeating = true })
 
 -- Requires playerctl
 hl.bind("XF86AudioNext", hl.dsp.exec_cmd("playerctl next"), { locked = true })
@@ -573,6 +585,8 @@ hl.window_rule({
     center = true,
     workspace = "special:todo",
 })
+
+
 
 
 

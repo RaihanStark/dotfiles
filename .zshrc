@@ -88,9 +88,43 @@ alias gs='git status -sb'
 alias gd='git diff'
 alias gl='git log --oneline --graph --decorate -20'
 alias config='/usr/bin/git --git-dir=$HOME/.dotfiles/ --work-tree=$HOME'
+alias standup='task rc.dateformat.report="Y-M-D H:N" end.after:today-1d completed rc.report.completed.columns=end,project,description rc.report.completed.labels=Completed,Project,Description'
 
 # ─── prompt ────────────────────────────────────────────────
 eval "$(starship init zsh)"
 source /usr/share/zsh/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 export PATH="$HOME/.local/bin:$PATH"
+
+# ─── vault (cryptsetup) ────────────────────────────────────
+vault-open() {
+  local container="/run/media/$USER/E9F7-F2E7/DO NOT DELETE/recovery.dat"
+  if [[ ! -f "$container" ]]; then
+    container=$(find "/run/media/$USER" -maxdepth 3 -name "recovery.dat" 2>/dev/null | head -n 1)
+  fi
+
+  if [[ -z "$container" || ! -f "$container" ]]; then
+    echo "❌ USB drive or recovery.dat not found under /run/media/$USER/"
+    return 1
+  fi
+
+  mkdir -p "$HOME/vault"
+  echo "🔑 Unlocking vault with cryptsetup..."
+  if sudo cryptsetup open --type tcrypt --veracrypt "$container" vault; then
+    sudo mount /dev/mapper/vault "$HOME/vault" && \
+    echo "✅ Vault mounted at ~/vault (0% idle CPU)"
+  fi
+}
+
+vault-close() {
+  if mountpoint -q "$HOME/vault"; then
+    echo "🔒 Unmounting ~/vault..."
+    sudo umount "$HOME/vault"
+  fi
+  if [[ -e /dev/mapper/vault ]]; then
+    sudo cryptsetup close vault && echo "✅ Vault locked and closed."
+  else
+    echo "Vault device is not open."
+  fi
+}
+
 
